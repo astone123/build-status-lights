@@ -2,3 +2,4 @@ ngrok
 config.yaml
 *.pyc
 /.vscode
+/venv
