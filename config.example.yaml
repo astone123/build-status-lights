@@ -1,3 +1,10 @@
 projects:
-    - repo_url: https://xxxxxxx
-      branch: xxx-xxx-xxx
+  - repo_url: https://xxxxxxx
+    branch: xxx-xxx-xxx
+nanoleaf:
+  ip_address:
+  authorization_token:
+colors:
+  success: #00FF00
+  in_process: #00AAAA
+  failure: #FF0000

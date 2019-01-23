@@ -1,20 +1,17 @@
 from flask import Flask, request, abort
-import yaml
+
+from config import Config
 
 app = Flask(__name__)
 
-with open("config.yaml", 'r') as stream:
-    try:
-        PROJECTS = yaml.load(stream).get('projects', [])
-    except yaml.YAMLError as exc:
-        print(exc)
+config = Config()
 
 @app.route('/', methods=['POST'])
 def webhook():
 	print(request.json)
 	data = request.get_json()
 	print(data.get('repository', {}).get('links', {}).get('html', {}).get('href', {}))
-	print(next(project for project in PROJECTS if project["repo_url"] == data.get('repository', {}).get('links', {}).get('html', {}).get('href', {})))
+	print(next(project for project in config.projects if project["repo_url"] == data.get('repository', {}).get('links', {}).get('html', {}).get('href', {})))
 	return 'success', 200
 
 
