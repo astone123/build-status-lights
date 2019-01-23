@@ -1,2 +1,4 @@
 ngrok
 config.yaml
+*.pyc
+/.vscode
