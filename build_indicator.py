@@ -7,6 +7,7 @@ class BuildIndicator:
 
     def __init__(self, config):
         self.nanoleaf = Nanoleaf(config)
+        self.status_colors = StatusColor.map_statuses(config)
         self.project_tiles = {}
         self.project_map = self._assign_project_map(config)
 
@@ -24,15 +25,15 @@ class BuildIndicator:
 
 
     def update_project_status(self, project_repo_url, status):
-        project_tiles = self.project_map.get(project_repo_url, '')
-        if project_tiles is None:
+        r,g,b = self.status_colors[status]
+        project_tiles = self.project_map.get(project_repo_url, [])
+        if len(project_tiles) == 0:
             print(f"Invalid project url received! {project_repo_url}")
             return
-        r,g,b = StatusColor.rgb_color_for()
         for tile in project_tiles:
             tile.set_color(r,g,b)
-        # theme_data = self._build_theme_data()
-        # self.nanoleaf.use_theme(theme_data)
+        theme_data = self._build_theme_data()
+        self.nanoleaf.use_theme(theme_data)
 
     def _build_theme_data(self):
         theme = Theme.anim

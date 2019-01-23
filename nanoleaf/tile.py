@@ -4,8 +4,7 @@ class Tile:
         self.id = tile_id
         self.color_data = [0,0,0,0,0]
 
-    def set_color(self, hex_value):
-        r,g,b = tuple(int(hex_value[i:i + 2], 16) for i in (0, 2, 4))
+    def set_color(self, r, g, b):
         self.color_data[0] = r
         self.color_data[1] = g
         self.color_data[2] = b

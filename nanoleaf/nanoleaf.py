@@ -15,8 +15,8 @@ class Nanoleaf:
         self.panel_ids = self.retrieve_tile_ids()
         self.panel_count = len(self.panel_ids)
         self.tiles = []
-        for id in self.panel_ids:
-            self.tiles.append(Tile(id))
+        for tile_id in self.panel_ids:
+            self.tiles.append(Tile(tile_id))
 
     def retrieve_tile_ids(self):
         url = self.base_url + Nanoleaf.GET_TILE_ENDPOINT
