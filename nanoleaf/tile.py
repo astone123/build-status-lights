@@ -1,0 +1,17 @@
+class Tile:
+
+    def __init__(self, tile_id):
+        self.id = tile_id
+        self.color_data = [0,0,0,0,0]
+
+    def set_color(self, hex_value):
+        r,g,b = tuple(int(hex_value[i:i + 2], 16) for i in (0, 2, 4))
+        self.color_data[0] = r
+        self.color_data[1] = g
+        self.color_data[2] = b
+
+    def stringify_color_data(self):
+        return ' '.join(str(color_elem) for color_elem in self.color_data)
+
+    def get_theme_string(self):
+        return f"{self.id} 1 {self.stringify_color_data()}"

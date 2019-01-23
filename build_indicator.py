@@ -1,0 +1,47 @@
+from nanoleaf.nanoleaf import Nanoleaf
+from nanoleaf.theme import Theme
+from status_color import StatusColor
+
+
+class BuildIndicator:
+
+    def __init__(self, config):
+        self.nanoleaf = Nanoleaf(config)
+        self.project_tiles = {}
+        self.project_map = self._assign_project_map(config)
+
+    def _assign_project_map(self, config):
+        m = {}
+        if config.projects.length == 1: # if there is only one project light the whole thing up
+            m[config.projects[0].get('repo_url')] = self.nanoleaf.panel_ids
+        else:
+            for project, tile in zip(config.projects, config.nanoleaf.panel_ids):
+                url = project.get('repo_url', None)
+                tiles = project.get('tile_ids', None)
+                if tiles is None:
+                    m[url] = tile
+        return m
+
+
+    def update_project_status(self, project_repo_url, status):
+        project_tiles = self.project_map.get(project_repo_url, '')
+        if project_tiles is None:
+            print(f"Invalid project url received! {project_repo_url}")
+            return
+        r,g,b = StatusColor.rgb_color_for()
+        for tile in project_tiles:
+            tile.set_color(r,g,b)
+        # theme_data = self._build_theme_data()
+        # self.nanoleaf.use_theme(theme_data)
+
+    def _build_theme_data(self):
+        theme = Theme.anim
+        anim_string = self._build_anim_string()
+        theme['animString'] = anim_string
+        return theme
+
+    def _build_anim_string(self):
+        anim_string = f"{self.nanoleaf.panel_count}"
+        for tile in self.nanoleaf.tiles:
+            anim_string += f" {tile.get_theme_string()}"
+        return anim_string
