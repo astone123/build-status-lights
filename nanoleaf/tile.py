@@ -1,7 +1,7 @@
 class Tile:
 
     def __init__(self, tile_id):
-        self.id = tile_id
+        self.tile_id = tile_id
         self.color_data = [0,0,0,0,0]
 
     def set_color(self, r, g, b):
@@ -13,4 +13,4 @@ class Tile:
         return ' '.join(str(color_elem) for color_elem in self.color_data)
 
     def get_theme_string(self):
-        return f"{self.id} 1 {self.stringify_color_data()}"
+        return f"{self.tile_id} 1 {self.stringify_color_data()}"

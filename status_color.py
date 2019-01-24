@@ -1,11 +1,11 @@
 class StatusColor:
 
     @staticmethod
-    def map_statuses(self, config):
+    def map_statuses(config):
         return {
-            'INPROGRESS': StatusColor.hex_to_rgb(config.colors.in_progress),
-            'FAILED': StatusColor.hex_to_rgb(config.colors.failure),
-            'SUCCESSFUL': StatusColor.hex_to_rgb(config.colors.success)
+            'INPROGRESS': StatusColor.hex_to_rgb(config.colors.get('in_progress')),
+            'FAILED': StatusColor.hex_to_rgb(config.colors.get('failure')),
+            'SUCCESSFUL': StatusColor.hex_to_rgb(config.colors.get('success'))
         }
 
     @staticmethod

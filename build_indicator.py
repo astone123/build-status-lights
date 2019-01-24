@@ -13,10 +13,10 @@ class BuildIndicator:
 
     def _assign_project_map(self, config):
         m = {}
-        if config.projects.length == 1: # if there is only one project light the whole thing up
-            m[config.projects[0].get('repo_url')] = self.nanoleaf.panel_ids
+        if len(config.projects) == 1: # if there is only one project light the whole thing up
+            m[config.projects[0].get('repo_url')] = self.nanoleaf.tiles
         else:
-            for project, tile in zip(config.projects, config.nanoleaf.panel_ids):
+            for project, tile in zip(config.projects, config.nanoleaf.tiles):
                 url = project.get('repo_url', None)
                 tiles = project.get('tile_ids', None)
                 if tiles is None:
@@ -38,7 +38,7 @@ class BuildIndicator:
     def _build_theme_data(self):
         theme = Theme.anim
         anim_string = self._build_anim_string()
-        theme['animString'] = anim_string
+        theme['animData'] = anim_string
         return theme
 
     def _build_anim_string(self):

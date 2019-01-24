@@ -30,7 +30,7 @@ class Nanoleaf:
     def use_theme(self, theme_data):
         url = self.base_url + Nanoleaf.EFFECT_ENDPOINT
         try:
-            r = requests.put(url, json=theme_data)
+            r = requests.put(url, json={'write': theme_data})
         except Exception:
             print('Unable to set theme on nanoleaf!')
             exit(0)
