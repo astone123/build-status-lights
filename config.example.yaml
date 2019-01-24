@@ -2,9 +2,9 @@ projects:
   - repo_url: https://xxxxxxx
     branch: xxx-xxx-xxx
 nanoleaf:
-  ip_address:
+  ip:
   authorization_token:
 colors:
-  success: #00FF00
-  in_process: #00AAAA
-  failure: #FF0000
+  success: 00FF00
+  in_progress: 00AAAA
+  failure: FF0000

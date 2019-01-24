@@ -25,15 +25,21 @@ class Nanoleaf:
         except Exception:
             print('Unable to get tile information from nanoleaf')
             exit(0)
-        return [panel_data['panelId'] for panel_data in r.json()['positionData']]
+
+        response_json = r.json()
+        if type(response_json) is list:
+            panel_ids = [panel_data['panelId'] for panel_data in r.json()]
+        else:
+            panel_ids = [panel_data['panelId'] for panel_data in r.json()['positionData']]
+
+        return panel_ids
 
     def use_theme(self, theme_data):
         url = self.base_url + Nanoleaf.EFFECT_ENDPOINT
         try:
-            r = requests.put(url, json={'write': theme_data})
+            requests.put(url, json={'write': theme_data})
         except Exception:
             print('Unable to set theme on nanoleaf!')
             exit(0)
-        return r.json()
 
 
