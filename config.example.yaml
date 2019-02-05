@@ -8,3 +8,4 @@ colors:
   success: 00FF00
   in_progress: 00AAAA
   failure: FF0000
+  stopped: FFA500

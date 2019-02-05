@@ -5,7 +5,8 @@ class StatusColor:
         return {
             'INPROGRESS': StatusColor.hex_to_rgb(config.colors.get('in_progress')),
             'FAILED': StatusColor.hex_to_rgb(config.colors.get('failure')),
-            'SUCCESSFUL': StatusColor.hex_to_rgb(config.colors.get('success'))
+            'SUCCESSFUL': StatusColor.hex_to_rgb(config.colors.get('success')),
+            'STOPPED': StatusColor.hex_to_rgb(config.colors.get('stopped'))
         }
 
     @staticmethod
