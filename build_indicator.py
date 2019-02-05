@@ -31,7 +31,8 @@ class BuildIndicator:
         r,g,b = self.status_colors[status]
         project_tiles = []
         for project, tiles in self.project_map.items():
-            if project_repo_url in project:
+            search_str = f"{project_repo_url}-{branch}"
+            if search_str in project:
                 project_tiles.append(tiles[0])
         if len(project_tiles) == 0:
             print(f"Invalid project url received! {project_repo_url}-{branch}")
