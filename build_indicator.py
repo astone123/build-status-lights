@@ -16,17 +16,22 @@ class BuildIndicator:
         if len(config.projects) == 1: # if there is only one project light the whole thing up
             m[config.projects[0].get('repo_url')] = self.nanoleaf.tiles
         else:
-            for project, tile in zip(config.projects, config.nanoleaf.tiles):
+            t_id = 0
+            for project, tile in zip(config.projects, self.nanoleaf.tiles):
                 url = project.get('repo_url', None)
                 tiles = project.get('tile_ids', None)
                 if tiles is None:
-                    m[url] = tile
+                    m[f"{url}-{t_id}"] = [tile]
+                t_id = t_id + 1
         return m
 
 
     def update_project_status(self, project_repo_url, status):
         r,g,b = self.status_colors[status]
-        project_tiles = self.project_map.get(project_repo_url, [])
+        project_tiles = []
+        for project, tiles in self.project_map.items():
+            if project_repo_url in project:
+                project_tiles.append(tiles[0])
         if len(project_tiles) == 0:
             print(f"Invalid project url received! {project_repo_url}")
             return
