@@ -19,21 +19,22 @@ class BuildIndicator:
             t_id = 0
             for project, tile in zip(config.projects, self.nanoleaf.tiles):
                 url = project.get('repo_url', None)
+                branch = project.get('branch', 'develop')
                 tiles = project.get('tile_ids', None)
                 if tiles is None:
-                    m[f"{url}-{t_id}"] = [tile]
+                    m[f"{url}-{branch}-{t_id}"] = [tile]
                 t_id = t_id + 1
         return m
 
 
-    def update_project_status(self, project_repo_url, status):
+    def update_project_status(self, project_repo_url, branch, status):
         r,g,b = self.status_colors[status]
         project_tiles = []
         for project, tiles in self.project_map.items():
             if project_repo_url in project:
                 project_tiles.append(tiles[0])
         if len(project_tiles) == 0:
-            print(f"Invalid project url received! {project_repo_url}")
+            print(f"Invalid project url received! {project_repo_url}-{branch}")
             return
         for tile in project_tiles:
             tile.set_color(r,g,b)

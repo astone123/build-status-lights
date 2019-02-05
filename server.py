@@ -15,7 +15,7 @@ def webhook():
         print(data.repo_url)
         print(data.branch_name)
         print(data.build_status)
-        build_indicator.update_project_status(data.repo_url, data.build_status)
+        build_indicator.update_project_status(data.repo_url,data.branch_name, data.build_status)
     return 'success', 200
 
 
