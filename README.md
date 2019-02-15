@@ -28,7 +28,7 @@ Configuration values:
   - `authorization_token`
     - This is the auth token used to communicate with your Nanoleaf light panels. You can obtain one of these by holding the power button on your light panel controls for 5-7 seconds and then sending this request to your lights
       ```
-      curl -X POST "http://<your-light-panel-ip-address:16021/api/v1/new"
+      curl -X POST "http://<your-light-panel-ip-address>:16021/api/v1/new"
       ```
 - `colors`
   - These are the colors that will display for each build status.
