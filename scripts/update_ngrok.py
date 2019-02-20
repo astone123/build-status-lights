@@ -29,8 +29,8 @@ def update_rest_api_uri(new_uri):
     http_method = os.environ.get('BUILD_STATUS_METHOD', None)
     client = boto3.client('apigateway')
 
-    if not rest_api_id or not resource_id or not http_method:
-        raise EnvironmentError('Must provide rest api id, method resource id, and http method')
+    if not rest_api_id or not stage_name or not resource_id or not http_method:
+        raise EnvironmentError('Must provide rest api id, method resource id, stage name, and http method')
 
     try:
         response = client.update_integration(
