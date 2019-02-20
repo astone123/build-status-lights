@@ -2,23 +2,25 @@ import boto3
 import os
 
 
-def _check_valid_aws_response(response: dict):
+def _check_valid_aws_response(response: dict) -> bool:
     if not response:
-        return
+        return False
     status = response.get('integrationResponses', None)
     if status:
         if '200' not in status.keys():
             print(f'Rest API Update response codes: {status.keys()}')
+            return False
+    return True
 
 
-def update_rest_api_uri(new_uri):
+def update_rest_api_uri(new_uri: str) -> bool:
     """
     :param new_uri: The url to forward request to
     :env BUILD_STATUS_AWS_REST_API_ID: AWS ID of an API Gateway's Rest API
     :env BUILD_STATUS_AWS_RESOURCE_ID: AWS ID of Route used to forward ('/' or '/<route>')
     :env BUILD_STATUS_AWS_STAGE_NAME: AWS Stage Name for stage to deploy your API on
     :env BUILD_STATUS_METHOD: Method used during forwarding
-    :return: True if update was successful, False if not
+    :return: True if update was successful, otherwise False
     """
     if not new_uri:
         return False
