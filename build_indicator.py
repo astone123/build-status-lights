@@ -1,6 +1,7 @@
 from nanoleaf.nanoleaf import Nanoleaf
 from nanoleaf.theme import Theme
 from status_color import StatusColor
+from server import save_state
 
 
 class BuildIndicator:
@@ -13,7 +14,7 @@ class BuildIndicator:
 
     def _assign_project_map(self, config):
         m = {}
-        if len(config.projects) == 1: # if there is only one project light the whole thing up
+        if len(config.projects) == 1:  # if there is only one project light the whole thing up
             m[config.projects[0].get('repo_url')] = self.nanoleaf.tiles
         else:
             t_id = 0
@@ -26,9 +27,13 @@ class BuildIndicator:
                 t_id = t_id + 1
         return m
 
+    def update_theme(self, theme_data):
+        self.nanoleaf.use_theme(theme_data)
+        save_state(theme_data)
+
 
     def update_project_status(self, project_repo_url, branch, status):
-        r,g,b = self.status_colors[status]
+        r, g, b = self.status_colors[status]
         project_tiles = []
         for project, tiles in self.project_map.items():
             search_str = f"{project_repo_url}-{branch}"
@@ -38,9 +43,9 @@ class BuildIndicator:
             print(f"Invalid project url received! {project_repo_url}-{branch}")
             return
         for tile in project_tiles:
-            tile.set_color(r,g,b)
+            tile.set_color(r, g, b)
         theme_data = self._build_theme_data()
-        self.nanoleaf.use_theme(theme_data)
+        self.update_theme(theme_data)
 
     def _build_theme_data(self):
         theme = Theme.anim
