@@ -18,6 +18,7 @@ class Config:
             print('Update your config.yaml to include a nanoleaf ip and authorization token')
             exit(0)
         self.colors = config_dict.get('colors', Config.DEFAULT_COLORS)
+        self.api_key = config_dict.get('api_key', None)
 
     @classmethod
     def _load(cls):
