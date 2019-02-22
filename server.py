@@ -34,7 +34,7 @@ def webhook():
 def save_state(theme_data):
     if os.path.exists(STATE_PATH):
         os.remove(STATE_PATH)
-    with open(STATE_PATH, 'r') as f:
+    with open(STATE_PATH, 'w') as f:
         f.write(json.dumps(theme_data))
 
 
