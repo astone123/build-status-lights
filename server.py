@@ -27,7 +27,7 @@ def permit(r):
 def webhook():
     data = BitbucketWebhookData(request.get_json(), config)
     inspect(request)
-    if permit(r) is False:
+    if permit(request) is False:
         return 'unauthorized', 401
     if data.is_valid_repo_url and data.is_valid_branch:
         print(data.repo_url)
