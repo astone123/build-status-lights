@@ -62,5 +62,3 @@ def update_rest_api_uri(new_uri: str) -> bool:
     print(f'Updated API Gateway ({resource_id}) {http_method} route to forward to {new_uri}')
     return True
 
-
-update_rest_api_uri('https://worldofwarcraft.com')
