@@ -1,4 +1,3 @@
-from geventwebsocket.handler import WebSocketHandler
 from flask import Flask, request
 from flask_socketio import SocketIO
 from flask_socketio import send, emit
