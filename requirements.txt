@@ -2,3 +2,6 @@ flask
 pyyaml
 requests
 flask-socketio
+pathlib
+asyncio
+websockets
