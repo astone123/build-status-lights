@@ -10,7 +10,7 @@ build_indicator = BuildIndicator(config)
 
 async def processWebhook():
     async with websockets.connect(
-            f'ws://localhost:3000?apiKey={config.api_key}') as websocket:
+            f'ws://{config.ws_server_hostname}:{config.ws_server_port}?apiKey={config.api_key}') as websocket:
 
         print('Connecting to server with ws...')
 
