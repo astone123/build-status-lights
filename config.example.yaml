@@ -9,3 +9,4 @@ colors:
   in_progress: 00AAAA
   failure: FF0000
   stopped: FFA500
+api_key: SOME_REALLY_LONG_SECRET_STRING
