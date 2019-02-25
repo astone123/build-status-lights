@@ -4,4 +4,4 @@ requests
 flask-socketio
 pathlib
 asyncio
-websockets
+websocket-client
