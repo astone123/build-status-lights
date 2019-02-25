@@ -15,6 +15,15 @@ const certificate = fs.readFileSync(
   "/etc/letsencrypt/live/build-status-lights.duckdns.org/cert.pem"
 );
 
+const httpsServer = https.createServer(
+  {
+    key: privateKey,
+    cert: certificate
+  },
+  app
+);
+const expressWss = require("express-ws")(app, httpsServer);
+
 app.use(bodyParser.json());
 
 app.post("/webhook", function(req, res, next) {
@@ -42,15 +51,5 @@ app.ws("/", function(ws, req) {
     ws.send(messages.pop());
   });
 });
-
-const httpsServer = https.createServer(
-  {
-    key: privateKey,
-    cert: certificate
-  },
-  app
-);
-
-const expressWss = require("express-ws")(app, httpsServer);
 
 httpsServer.listen(3000);
