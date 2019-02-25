@@ -4,7 +4,6 @@ const fs = require("fs");
 const app = express();
 const queue = require("queue");
 const bodyParser = require("body-parser");
-const expressWs = require("express-ws")(app);
 
 const q = queue({ autostart: true });
 const messages = [];
@@ -24,7 +23,7 @@ app.post("/webhook", function(req, res, next) {
     messages.push(data);
     cb();
   });
-  res.send(200)
+  res.send(200);
 });
 
 app.ws("/", function(ws, req) {
@@ -44,12 +43,14 @@ app.ws("/", function(ws, req) {
   });
 });
 
-https
-  .createServer(
-    {
-      key: privateKey,
-      cert: certificate
-    },
-    app
-  )
-  .listen(3000);
+const httpsServer = https.createServer(
+  {
+    key: privateKey,
+    cert: certificate
+  },
+  app
+);
+
+const expressWss = require("express-ws")(app, httpsServer);
+
+httpsServer.listen(3000);
