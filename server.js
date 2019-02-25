@@ -24,7 +24,7 @@ app.post("/webhook", function(req, res, next) {
     messages.push(data);
     cb();
   });
-  res.end();
+  res.send(200)
 });
 
 app.ws("/", function(ws, req) {
