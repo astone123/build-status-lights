@@ -4,13 +4,18 @@ import json
 from config import Config
 from bitbucket_webhook_data import BitbucketWebhookData
 from build_indicator import BuildIndicator
+from state import save_state, load_state
 
 config = Config()
 build_indicator = BuildIndicator(config)
 
 async def processWebhook():
+    previous_state = load_state()
+    if previous_state:
+        build_indicator.update_theme(previous_state)
+
     async with websockets.connect(
-            f'ws://{config.ws_server_hostname}:{config.ws_server_port}?apiKey={config.api_key}') as websocket:
+            f'wss://{config.ws_server_hostname}:{config.ws_server_port}?apiKey={config.api_key}') as websocket:
 
         print('Connecting to server with ws...')
 
