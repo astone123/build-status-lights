@@ -9,10 +9,10 @@ const messages = [];
 
 app.use(bodyParser.json());
 
-app.post("/", function(req, res, next) {
-  console.log("post route", req.testing);
+app.post("/webhook", function(req, res, next) {
+  data = JSON.stringify(req.data)
   q.push(cb => {
-    messages.push(req.body);
+    messages.push(data);
     cb();
   });
   res.end();
@@ -31,7 +31,7 @@ app.ws("/", function(ws, req) {
 
   q.on("success", function(result, job) {
     console.log(result, job);
-    ws.send(JSON.stringify(messages.pop()));
+    ws.send(messages.pop());
   });
 });
 
