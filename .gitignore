@@ -3,4 +3,3 @@ config.yaml
 *.pyc
 /.vscode
 /venv
-*.js
