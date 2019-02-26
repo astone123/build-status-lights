@@ -8,12 +8,10 @@ const bodyParser = require("body-parser");
 const q = queue({ autostart: true });
 const messages = [];
 
-const privateKey = fs.readFileSync(
-  "/etc/letsencrypt/live/build-status-lights.duckdns.org/privkey.pem"
-);
-const certificate = fs.readFileSync(
-  "/etc/letsencrypt/live/build-status-lights.duckdns.org/cert.pem"
-);
+const { CERTIFICATE_PATH, PRIVATE_KEY_PATH, API_KEY } = process.env;
+
+const privateKey = fs.readFileSync(PRIVATE_KEY_PATH);
+const certificate = fs.readFileSync(CERTIFICATE_PATH);
 
 const httpsServer = https.createServer(
   {
@@ -38,7 +36,7 @@ app.post("/webhook", function(req, res, next) {
 app.ws("/", function(ws, req) {
   const apiKey = req.query.apiKey;
 
-  if (!apiKey || apiKey != process.env.API_KEY) {
+  if (!apiKey || apiKey != API_KEY) {
     ws.close();
   }
 
