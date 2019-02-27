@@ -19,6 +19,8 @@ class Config:
             exit(0)
         self.colors = config_dict.get('colors', Config.DEFAULT_COLORS)
         self.api_key = config_dict.get('api_key', None)
+        self.ws_server_hostname = config_dict.get('ws_server_hostname', None)
+        self.ws_server_port = config_dict.get('ws_server_port', 80)
 
     @classmethod
     def _load(cls):

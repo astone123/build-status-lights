@@ -1,5 +1,7 @@
-ngrok
 config.yaml
 *.pyc
 /.vscode
 /venv
+/node_modules
+/__pycache__
+build_state.json

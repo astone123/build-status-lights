@@ -1,7 +1,7 @@
 from nanoleaf.nanoleaf import Nanoleaf
 from nanoleaf.theme import Theme
 from status_color import StatusColor
-from server import save_state
+from state import save_state, load_state
 
 
 class BuildIndicator:
