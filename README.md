@@ -1,10 +1,10 @@
 # Build Status Lights
 
-This is a Python server that uses Bitbucket Webhooks to display project build statuses on a [Nanoleaf](https://nanoleaf.me/) light panel.
+This is a Python websocket client that receives Bitbucket webhook data from a websocket server to display project build statuses on a [Nanoleaf](https://nanoleaf.me/) light panel.
 
 ## Getting Started
 
-Right now, in order to use this server you need to be using Bitbucket build pipelines and have a Nanoleaf light panel (Aurora or Canvas) setup on your local network.
+Right now, in order to use this client you need a websocket server that is receiving Bitbucket webhook data and forwarding it to websocket clients, and have a Nanoleaf light panel (Aurora or Canvas) setup on your local network. You can use [simple-websocket-server](https://github.com/astone123/simple-websocket-server.git) to forward webhook data to this client.
 
 Clone this repository
 
@@ -12,7 +12,7 @@ Clone this repository
 git clone https://github.com/astone123/build-status-lights.git
 ```
 
-Configure the server by replacing example configuration values with your actual information
+Configure the client by replacing example configuration values with your actual information
 
 ```
 cp config.example.yaml config.yaml
@@ -32,19 +32,17 @@ Configuration values:
       ```
 - `colors`
   - These are the colors that will display for each build status.
+- `api_key` (optional)
+  - This is an api key that will be sent with the webhook client's connection request
+- `ws_server_hostname`
+  - The hostname where your websocket server is running
+- `ws_server_port`
+  - The port that your websocket server is running on
 
-## Run with Docker
+After your client is configured, run
 
-`docker build -t build-status-lights .`
+```
+python ws_client.py
+```
 
-`docker run -d -p 8000:8000 build-status-lights`
-
-## Exposing your Server
-
-You'll need to either adjust your router settings or use a program like [ngrok](https://ngrok.com/) to expose port 8000 on your server so that Bitbucket can send requests to it.
-
-## Set up Bitbucket Webhooks
-
-Go to each Bitbucket project that you put in your `config.yaml` file, navigate to `Settings > Webhooks > Add Webhook`.
-
-Enter the URL for your server, and under `Triggers`, select `Choose from a list of triggers` and check `Build status created` and `Build status updated`.
+the websocket client should then connect to your server and be ready to receive webhook data.
