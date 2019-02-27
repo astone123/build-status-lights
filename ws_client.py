@@ -25,11 +25,10 @@ async def processWebhook():
 
     async with websockets.connect(url, ssl=ssl_context) as websocket:
 
-        print('Connecting to server with ws...')
+        print('WS client connected')
 
         while True:
             webhookData = await websocket.recv()
-            print(f"< {webhookData}")
 
             try:
                 webhookData = json.loads(webhookData)
