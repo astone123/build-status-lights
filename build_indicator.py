@@ -13,7 +13,9 @@ class BuildIndicator:
         self.project_tiles = {}
         self.project_map = self._assign_project_map(config, previous_state)
 
-    def _assign_project_map(self, config, previous_state):
+    def _assign_project_map(self, config, previous_state=None):
+        if previous_state is None:
+            previous_state = {}
         m = {}
         if len(config.projects) == 1:  # if there is only one project light the whole thing up
             m[config.projects[0].get('repo_url')] = self.nanoleaf.tiles
