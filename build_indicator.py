@@ -41,7 +41,7 @@ class BuildIndicator:
 
     def update_theme(self, theme_data):
         self.nanoleaf.use_theme(theme_data)
-        save_state(self.project_tiles)
+        save_state(self.project_map)
 
 
     def update_project_status(self, project_repo_url, branch, status):
