@@ -18,6 +18,12 @@ class Nanoleaf:
         for tile_id in self.panel_ids:
             self.tiles.append(Tile(tile_id))
 
+    def update_tiles(self, loaded_tiles):
+        for loaded_tile in loaded_tiles:
+            for index, nano_tile in enumerate(self.tiles):
+                if loaded_tile.tile_id == nano_tile.tile_id:
+                    self.tiles[index] = loaded_tile
+
     def retrieve_tile_ids(self):
         url = self.base_url + Nanoleaf.GET_TILE_ENDPOINT
         try:

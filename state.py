@@ -3,11 +3,11 @@ import os
 
 STATE_PATH = os.path.join(os.getcwd(), 'build_state.json')
 
-def save_state(theme_data):
+def save_state(project_tiles):
     if os.path.exists(STATE_PATH):
         os.remove(STATE_PATH)
     with open(STATE_PATH, 'w') as f:
-        f.write(json.dumps(theme_data))
+        f.write(json.dumps(project_tiles, default=lambda o: o.__dict__))
 
 
 def load_state():

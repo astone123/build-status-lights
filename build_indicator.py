@@ -1,18 +1,19 @@
 from nanoleaf.nanoleaf import Nanoleaf
 from nanoleaf.theme import Theme
+from nanoleaf.tile import Tile
 from status_color import StatusColor
 from state import save_state, load_state
 
 
 class BuildIndicator:
 
-    def __init__(self, config):
+    def __init__(self, config, previous_state=None):
         self.nanoleaf = Nanoleaf(config)
         self.status_colors = StatusColor.map_statuses(config)
         self.project_tiles = {}
-        self.project_map = self._assign_project_map(config)
+        self.project_map = self._assign_project_map(config, previous_state)
 
-    def _assign_project_map(self, config):
+    def _assign_project_map(self, config, previous_state):
         m = {}
         if len(config.projects) == 1:  # if there is only one project light the whole thing up
             m[config.projects[0].get('repo_url')] = self.nanoleaf.tiles
@@ -22,14 +23,23 @@ class BuildIndicator:
                 url = project.get('repo_url', None)
                 branch = project.get('branch', 'develop')
                 tiles = project.get('tile_ids', None)
-                if tiles is None:
-                    m[f"{url}-{branch}-{t_id}"] = [tile]
+                key = f"{url}-{branch}-{t_id}"
+                value = previous_state.get(key, None)
+                if value:
+                    loaded_tiles = Tile.from_dict(value)
+                    if tile:
+                        m[key] = loaded_tiles
+                        self.nanoleaf.update_tiles(loaded_tiles)
+                    else:
+                        m[key] = [tile]
+                elif tiles is None:
+                    m[key] = [tile]
                 t_id = t_id + 1
         return m
 
     def update_theme(self, theme_data):
         self.nanoleaf.use_theme(theme_data)
-        save_state(theme_data)
+        save_state(self.project_tiles)
 
 
     def update_project_status(self, project_repo_url, branch, status):

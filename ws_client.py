@@ -8,17 +8,20 @@ from build_indicator import BuildIndicator
 from state import save_state, load_state
 
 config = Config()
-build_indicator = BuildIndicator(config)
+
+previous_state = load_state()
+build_indicator = None
+if previous_state:
+    build_indicator = BuildIndicator(config, previous_state)
+    build_indicator._build_theme_data()
+else:
+    build_indicator = BuildIndicator(config)
 
 ssl_context = ssl.SSLContext()
 ssl_context.verify_mode = ssl.CERT_NONE
 ssl_context.check_hostname = False
 
 async def processWebhook():
-    previous_state = load_state()
-    if previous_state:
-        build_indicator.update_theme(previous_state)
-
     url = f'wss://{config.ws_server_hostname}:{config.ws_server_port}?apiKey={config.api_key}'
 
     print(f'WSS URL {url}')
